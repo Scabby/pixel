@@ -4,6 +4,7 @@ const white = "#ffffff"
 
 
 function draw(x, y) {
+    console.log("draw")
     if(drawing) {
         ctx.fillStyle = color
         ctx.fillRect(Math.round(x), Math.round(y), 1, 1)
@@ -20,6 +21,7 @@ document.addEventListener("load", (e) => {
     ctx.fillRect(0, 0, canvas.width, canvas.height)
     
     canvas.addEventListener("mousedown", (e) => {
+        console.log("mousedown")
         drawing = true
 
         let target = ctx.getImageData(Math.round(e.offsetX), Math.round(e.offsetY), 1, 1).data
@@ -35,15 +37,18 @@ document.addEventListener("load", (e) => {
     })
 
     canvas.addEventListener("mousemove", (e) => {
+        console.log("mousemove")
         draw(e.offsetX, e.offsetY)
     })
 
     canvas.addEventListener("mouseup", (e) => {
+        console.log("mouseup")
         draw(e.offsetX, e.offsetY)
         drawing = false
     })
     
     canvas.addEventListener("mouseleave", (e) => {
+        console.log("mouseleave")
         draw(e.offsetX, e.offsetY)
         drawing = false
     })
