@@ -40,8 +40,8 @@ canvas.addEventListener("mousedown", (e) => {
                 &&  target[1] < 128
                 &&  target[2] < 128
     
-    if(is_black)    { color = "#ffffff" }
-    else            { color = "#000000" }
+    if(is_black)    { color = "#000000" }
+    else            { color = "#ffffff" }
 })
 
 canvas.addEventListener("mousemove", (e) => {
