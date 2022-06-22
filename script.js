@@ -64,9 +64,7 @@ onload = (e) => {
     })
 }
 
-
-
-document.addEventListener("resize", (e) => {
+onresize = (e) => {
     if(window.offsetHeight / canvas.height > window.offsetWidth / canvas.width) {
         canvas.style.width  = "100vw"
         canvas.style.height = "calc(" + canvas.height + "px * 100vh / " + canvas.width + "px)"
@@ -74,7 +72,9 @@ document.addEventListener("resize", (e) => {
         canvas.style.height = "100vh"
         canvas.style.width  = "calc(" + canvas.width + "px * 100vw / " + canvas.height + "px)"
     }
-})
+}
+
+
 
 document.addEventListener("keydown", (e) => {
     e.preventDefault()
