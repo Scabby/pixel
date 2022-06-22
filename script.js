@@ -66,6 +66,16 @@ onload = (e) => {
 
 
 
+document.addEventListener("resize", (e) => {
+    if(window.offsetHeight / canvas.height > window.offsetWidth / canvas.width) {
+        canvas.offsetWidth  = "100vw"
+        canvas.offsetHeight = "calc(" + canvas.height + " * 100vh / " + canvas.width + ")"
+    } else {
+        canvas.offsetHeight = "100vh"
+        canvas.offsetWidth  = "calc(" + canvas.width + " * 100vw / " + canvas.height + ")"
+    }
+})
+
 document.addEventListener("keydown", (e) => {
     e.preventDefault()
     //
