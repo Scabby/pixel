@@ -13,7 +13,7 @@ function draw(x, y) {
 
 
 
-document.addEventListener("load", (e) => {
+onload = (e) => {
     canvas  = document.getElementsByTagName("canvas")[0]
     ctx     = canvas.getContext("2d")
     
@@ -52,7 +52,7 @@ document.addEventListener("load", (e) => {
         draw(e.offsetX, e.offsetY)
         drawing = false
     })
-})
+}
 
 
 
