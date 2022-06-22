@@ -1,14 +1,9 @@
-function drawLine(new_x, new_y) {
-    ctx.beginPath()
-    ctx.strokeStyle = color
-    ctx.lineWidth = 1
-    stx.moveTo(x, y)
-    ctx.lineTo(new_x, new_y)
-    ctx.stroke()
-    ctx.closePath()
+function draw(x, y) {
+    if(drawing) {
+        ctx.fillStyle = color
+        ctx.fillRect(x, y, 1, 1)
+    }
 }
-
-
 
 document.addEventListener("load", (e) => {
     canvas  = document.getElementsByTagName("canvas")[0]
@@ -16,8 +11,6 @@ document.addEventListener("load", (e) => {
     
     canvas.addEventListener("mousedown", (e) => {
         drawing = true
-        x       = e.offsetX
-        y       = e.offsetY
 
         let target = ctx.getImageData(x, y, 1, 1).data
 
@@ -25,28 +18,24 @@ document.addEventListener("load", (e) => {
                     &&  target[1] < 128
                     &&  target[2] < 128
 
-        if(is_black)    { color = "#000000" }
-        else            { color = "#ffffff" }
+        if(is_black)    { color = "#ffffff" }
+        else            { color = "#000000" }
+        
+        draw(e.offsetX, e.offsetY)
     })
 
     canvas.addEventListener("mousemove", (e) => {
-        if(drawing) {
-            draw_line(e.offsetX, e.offsetY)
-        }
+        draw(e.offsetX, e.offsetY)
     })
 
     canvas.addEventListener("mouseup", (e) => {
-        if(drawing) {
-            draw_line(e.offsetX, e.offsetY)
-            drawing = false
-        }
+        draw(e.offsetX, e.offsetY)
+        drawing = false
     })
     
     canvas.addEventListener("mouseleave", (e) => {
-        if(drawing) {
-            draw_line(e.offsetX, e.offsetY)
-            drawing = false
-        }
+        draw(e.offsetX, e.offsetY)
+        drawing = false
     })
 })
 
