@@ -34,7 +34,7 @@ canvas.addEventListener("mousedown", (e) => {
     x       = e.offsetX
     y       = e.offsetY
     
-    let target = ctx.getImageData(x, y. 1, 1).data
+    let target = ctx.getImageData(x, y, 1, 1).data
     
     let is_black =  target[0] < 128
                 &&  target[1] < 128
