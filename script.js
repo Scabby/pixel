@@ -22,7 +22,7 @@ document.addEventListener("load", (e) => {
     canvas.addEventListener("mousedown", (e) => {
         drawing = true
 
-        let target = ctx.getImageData(x, y, 1, 1).data
+        let target = ctx.getImageData(Math.round(e.offsetX), Math.round(e.offsetY), 1, 1).data
 
         let is_black =  target[0] < 128
                     &&  target[1] < 128
