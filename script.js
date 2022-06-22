@@ -5,8 +5,8 @@ let drawing = false
 
 function get_canvas_coords(x, y) {
     return {
-        x: Math.round(canvas.width * x / canvas.offsetWidth),
-        y: Math.round(canvas.height * y / canvas.offsetHeight)
+        x: Math.floor(canvas.width * x / canvas.offsetWidth),
+        y: Math.floor(canvas.height * y / canvas.offsetHeight)
     }
 }
 
