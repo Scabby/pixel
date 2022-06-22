@@ -3,11 +3,25 @@ const white = "#ffffff"
 let drawing = false
 
 
+function get_canvas_coords(x, y) {
+    return {
+        x: Math.round(x / canvas.innerWidth),
+        y: Math.round(y / canvas.innerHeight)
+    }
+}
+
+function get_pixel(x, y) {
+    let coords = get_canvas_coords(x, y)
+    
+    return ctx.getImageData(coords.x, coords.y, 1, 1).data
+}
 
 function draw(x, y) {
     if(drawing) {
+        let coords = get_canvas_coords(x, y)
+        
         ctx.fillStyle = color
-        ctx.fillRect(Math.round(x), Math.round(y), 1, 1)
+        ctx.fillRect(coords.x, coords.y, 1, 1)
     }
 }
 
@@ -22,8 +36,8 @@ onload = (e) => {
     
     canvas.addEventListener("mousedown", (e) => {
         drawing = true
-
-        let target = ctx.getImageData(Math.round(e.offsetX), Math.round(e.offsetY), 1, 1).data
+        
+        let target = get_pixel(e.offsetX, e.offsetY)
 
         let is_black =  target[0] < 128
                     &&  target[1] < 128
