@@ -68,11 +68,11 @@ onload = (e) => {
 
 document.addEventListener("resize", (e) => {
     if(window.offsetHeight / canvas.height > window.offsetWidth / canvas.width) {
-        canvas.offsetWidth  = "100vw"
-        canvas.offsetHeight = "calc(" + canvas.height + " * 100vh / " + canvas.width + ")"
+        canvas.style.width  = "100vw"
+        canvas.style.height = "calc(" + canvas.height + "px * 100vh / " + canvas.width + "px)"
     } else {
-        canvas.offsetHeight = "100vh"
-        canvas.offsetWidth  = "calc(" + canvas.width + " * 100vw / " + canvas.height + ")"
+        canvas.style.height = "100vh"
+        canvas.style.width  = "calc(" + canvas.width + "px * 100vw / " + canvas.height + "px)"
     }
 })
 
