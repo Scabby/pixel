@@ -1,13 +1,23 @@
+const black = "#000000"
+const white = "#ffffff"
+
+
+
 function draw(x, y) {
     if(drawing) {
         ctx.fillStyle = color
-        ctx.fillRect(x, y, 1, 1)
+        ctx.fillRect(Math.round(x), Math.round(y), 1, 1)
     }
 }
+
+
 
 document.addEventListener("load", (e) => {
     canvas  = document.getElementsByTagName("canvas")[0]
     ctx     = canvas.getContext("2d")
+    
+    ctx.fillStyle = black
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
     
     canvas.addEventListener("mousedown", (e) => {
         drawing = true
@@ -18,8 +28,8 @@ document.addEventListener("load", (e) => {
                     &&  target[1] < 128
                     &&  target[2] < 128
 
-        if(is_black)    { color = "#ffffff" }
-        else            { color = "#000000" }
+        if(is_black)    { color = white }
+        else            { color = black }
         
         draw(e.offsetX, e.offsetY)
     })
