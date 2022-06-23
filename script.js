@@ -14,14 +14,11 @@ function get_canvas_coords(x, y) {
 }
 
 function get_pixel(x, y) {
-    let coords = get_canvas_coords(x, y)
-
-    return ctx.getImageData(coords.x, coords.y, 1, 1).data
+    return ctx.getImageData(x, y, 1, 1).data
 }
 
 function draw(x, y) {
     if(drawing) {
-        let coords  = get_canvas_coords(x, y)
         let update  = ctx.createImageData(1, 1)
 
         update.data[0] = color[0]
@@ -29,7 +26,7 @@ function draw(x, y) {
         update.data[2] = color[2]
         update.data[3] = color[3]
 
-        ctx.putImageData(update, coords.x, coords.y)
+        ctx.putImageData(update, x, y)
     }
 }
 
@@ -44,6 +41,22 @@ function resize(e) {
 }
 
 
+
+function convert_mouse(e) {
+    return get_canvas_coords(
+        e.offsetX,
+        e.offsetY
+    )
+}
+
+function convert_touch(e, i = 0) {
+    let rect = e.target.getBoundingClientRect()
+    
+    return get_canvas_coords(
+        e.targetTouches[i].pageX - rect.left,
+        e.targetTouches[i].pageX - rect.right
+    )
+}
 
 function set_color(x, y) {
     if(shifting) {
@@ -64,23 +77,26 @@ function set_color(x, y) {
 
 function mousedown(e) {
     e.preventDefault()
+    let pos = convert_mouse(e)
 
     drawing = true
 
-    set_color(e.offsetX, e.offsetY)
-    draw(e.offsetX, e.offsetY)
+    set_color(pos.x, pos.y)
+    draw(pos.x, pos.y)
 }
 
 function mousemove(e) {
     e.preventDefault()
+    let pos = convert_mouse(e)
 
-    draw(e.offsetX, e.offsetY)
+    draw(pos.x, pos.y)
 }
 
 function mouseup(e) {
     e.preventDefault()
+    let pos = convert_mouse(e)
 
-    draw(e.offsetX, e.offsetY)
+    draw(pos.x, pos.y)
     drawing = false
 }
 
@@ -88,23 +104,26 @@ function mouseup(e) {
 
 function touchstart(e) {
     e.preventDefault()
+    let pos = convert_touch(e)
     
     drawing = true
     
-    set_color(e.targetTouches[0].pageX, e.targetTouches[0].pageY)
-    draw(e.targetTouches[0].pageX, e.targetTouches[0].pageY)
+    set_color(pos.x, pos.y)
+    draw(pos.x, pos.y)
 }
 
 function touchmove(e) {
     e.preventDefault()
+    let pos = convert_touch(e)
     
-    draw(e.targetTouches[0].pageX, e.targetTouches[0].pageY)
+    draw(pos.x, pos.y)
 }
 
 function touchend(e) {
     e.preventDefault()
+    let pos = convert_touch(e)
     
-    draw(e.targetTouches[0].pageX, e.targetTouches[0].pageY)
+    draw(pos.x, pos.y)
     drawing = false
 }
 
