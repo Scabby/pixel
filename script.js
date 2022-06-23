@@ -49,15 +49,6 @@ function convert_mouse(e) {
     )
 }
 
-function convert_touch(e, i = 0) {
-    let rect = e.target.getBoundingClientRect()
-    
-    return get_canvas_coords(
-        e.targetTouches[i].pageX - rect.left,
-        e.targetTouches[i].pageX - rect.right
-    )
-}
-
 function set_color(x, y) {
     if(shifting) {
         color = transparent
@@ -104,7 +95,13 @@ function mouseup(e) {
 
 function touchstart(e) {
     e.preventDefault()
-    let pos = convert_touch(e, 0)
+    
+    let rect = e.target.getBoundingClientRect()
+    
+    let pos = get_canvas_coords(
+        e.targetTouches[0].pageX - rect.left,
+        e.targetTouches[0].pageY - rect.top
+    )
     
     drawing = true
     
@@ -114,14 +111,26 @@ function touchstart(e) {
 
 function touchmove(e) {
     e.preventDefault()
-    let pos = convert_touch(e, 0)
+    
+    let rect = e.target.getBoundingClientRect()
+    
+    let pos = get_canvas_coords(
+        e.targetTouches[0].pageX - rect.left,
+        e.targetTouches[0].pageY - rect.top
+    )
     
     draw(pos.x, pos.y)
 }
 
 function touchend(e) {
     e.preventDefault()
-    let pos = convert_touch(e, 0)
+    
+    let rect = e.target.getBoundingClientRect()
+    
+    let pos = get_canvas_coords(
+        e.changedTouches[0].pageX - rect.left,
+        e.changedTouches[0].pageY - rect.top
+    )
     
     draw(pos.x, pos.y)
     drawing = false
