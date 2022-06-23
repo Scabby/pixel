@@ -45,15 +45,11 @@ function resize(e) {
 
 
 
-function mousedown(e) {
-    e.preventDefault()
-
-    drawing = true
-
+function set_color(x, y) {
     if(shifting) {
         color = transparent
     } else {
-        let target = get_pixel(e.offsetX, e.offsetY)
+        let target = get_pixel(x, y)
 
         let is_black =  target[0] < 128
                     &&  target[1] < 128
@@ -62,7 +58,16 @@ function mousedown(e) {
         if(is_black)    { color = white }
         else            { color = black }
     }
+}
 
+
+
+function mousedown(e) {
+    e.preventDefault()
+
+    drawing = true
+
+    set_color(e.offsetX, e.offsetY)
     draw(e.offsetX, e.offsetY)
 }
 
@@ -81,6 +86,30 @@ function mouseup(e) {
 
 
 
+function touchstart(e) {
+    e.preventDefault()
+    
+    drawing = true
+    
+    set_color(e.targetTouches[0].pageX, e.targetTouches[0].pageY)
+    draw(e.targetTouches[0].pageX, e.targetTouches[0].pageY)
+}
+
+function touchmove(e) {
+    e.preventDefault()
+    
+    draw(e.targetTouches[0].pageX, e.targetTouches[0].pageY)
+}
+
+function touchend(e) {
+    e.preventDefault()
+    
+    draw(e.targetTouches[0].pageX, e.targetTouches[0].pageY)
+    drawing = false
+}
+
+
+
 onload = e => {
     canvas  = document.getElementsByTagName("canvas")[0]
     ctx     = canvas.getContext("2d")
@@ -88,13 +117,13 @@ onload = e => {
     ctx.fillStyle = black
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-    canvas.addEventListener("mousedown",    e => mousedown(e))
-    canvas.addEventListener("mousemove",    e => mousemove(e))
-    document.addEventListener("mouseup",    e => mouseup(e))
+    canvas.addEventListener("mousedown",    mousedown)
+    canvas.addEventListener("mousemove",    mousemove)
+    document.addEventListener("mouseup",    mouseup)
 
-    canvas.addEventListener("touchstart",   e => mousedown(e),  { passive: false })
-    canvas.addEventListener("touchmove",    e => mousemove(e),  { passive: false })
-    document.addEventListener("touchend",   e => mouseup(e),    { passive: false })
+    canvas.addEventListener("touchstart",   touchstart, { passive: false })
+    canvas.addEventListener("touchmove",    touchmove,  { passive: false })
+    document.addEventListener("touchend",   touchend,   { passive: false })
 
     resize()
 }
