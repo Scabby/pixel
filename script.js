@@ -104,7 +104,7 @@ function mouseup(e) {
 
 function touchstart(e) {
     e.preventDefault()
-    let pos = convert_touch(e)
+    let pos = convert_touch(e, 0)
     
     drawing = true
     
@@ -114,14 +114,14 @@ function touchstart(e) {
 
 function touchmove(e) {
     e.preventDefault()
-    let pos = convert_touch(e)
+    let pos = convert_touch(e, 0)
     
     draw(pos.x, pos.y)
 }
 
 function touchend(e) {
     e.preventDefault()
-    let pos = convert_touch(e)
+    let pos = convert_touch(e, 0)
     
     draw(pos.x, pos.y)
     drawing = false
