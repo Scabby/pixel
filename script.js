@@ -156,7 +156,7 @@ onload = e => {
     resize()
 }
 
-onresize = e => resize(e)
+onresize = resize
 
 
 
