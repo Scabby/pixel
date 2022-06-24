@@ -25,7 +25,7 @@ function get_canvas_coords(x, y) {
     }
 }
 
-function draw(x, y) {
+function draw() {
     let drawing = ctx.createImageData(canvas.width, canvas.height)
     
     for(let i = 0; i < drawing.data.length; i += 4) {
