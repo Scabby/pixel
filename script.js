@@ -1,20 +1,9 @@
+const board         = []
 const black         = [0, 0, 0, 255]
 const white         = [255, 255, 255, 255]
 const transparent   = [255, 255, 255, 0]
 let color           = 1
 let drawing         = false
-
-const board = []
-
-for(let i = 0; i < canvas.width; i++) {
-    let filler = []
-    
-    for(let j = 0; j < canvas.height; j++) {
-        filler.push(2)
-    }
-    
-    board.push(filler)
-}
 
 
 
@@ -167,6 +156,16 @@ onload = e => {
     canvas.addEventListener("touchstart",   touchstart, { passive: false })
     canvas.addEventListener("touchmove",    touchmove,  { passive: false })
     document.addEventListener("touchend",   touchend,   { passive: false })
+    
+    for(let i = 0; i < canvas.width; i++) {
+        let filler = []
+
+        for(let j = 0; j < canvas.height; j++) {
+            filler.push(2)
+        }
+        
+        board.push(filler)
+    }
 
     resize()
 }
