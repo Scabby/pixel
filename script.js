@@ -1,12 +1,19 @@
 const black         = [0, 0, 0, 255]
 const white         = [255, 255, 255, 255]
 const transparent   = [255, 255, 255, 0]
+let color           = 1
 let drawing         = false
 
 const board = []
 
 for(let i = 0; i < canvas.width; i++) {
-    board.push([])
+    let filler = []
+    
+    for(let j = 0; j < canvas.height; j++) {
+        filler.push(2)
+    }
+    
+    board.push(filler)
 }
 
 
@@ -21,15 +28,15 @@ function get_canvas_coords(x, y) {
 function draw(x, y) {
     let drawing = ctx.createImageData(canvas.width, canvas.height)
     
-    for(int i = 0; i < drawing.data.length; i += 4)
+    for(let i = 0; i < drawing.data.length; i += 4)
         let x = (i / 4) % canvas.width
         let y = Math.floor((i / 4) / canvas.width)
         let target_color
         
         switch(board[x][y]) {
             case 1: target_color = white; break
-            case 1: target_color = black; break
-            case 1: target_color = transparent
+            case 2: target_color = black; break
+            case 3: target_color = transparent
         }
     
         drawing.data[i + 0] = target_color[0]
@@ -68,23 +75,29 @@ function mousedown(e) {
 
     drawing = true
 
-    set_color(pos.x, pos.y)
-    draw(pos.x, pos.y)
+    board[pos.x, pos.y] = color
+    draw()
 }
 
 function mousemove(e) {
     e.preventDefault()
     let pos = convert_mouse(e)
 
-    draw(pos.x, pos.y)
+    if(drawing) {
+        board[pos.x, pos.y] = color
+        draw()
+    }
 }
 
 function mouseup(e) {
     e.preventDefault()
     let pos = convert_mouse(e)
 
-    draw(pos.x, pos.y)
-    drawing = false
+    if(drawing) {
+        board[pos.x, pos.y] = color
+        draw()
+        drawing = false
+    }
 }
 
 
@@ -101,7 +114,8 @@ function touchstart(e) {
     
     drawing = true
     
-    draw(pos.x, pos.y)
+    board[pos.x, pos.y] = color
+    draw()
 }
 
 function touchmove(e) {
@@ -114,7 +128,10 @@ function touchmove(e) {
         e.targetTouches[0].pageY - rect.top
     )
     
-    draw(pos.x, pos.y)
+    if(drawing) {
+        board[pos.x, pos.y] = color
+        draw()
+    }
 }
 
 function touchend(e) {
@@ -127,8 +144,11 @@ function touchend(e) {
         e.changedTouches[0].pageY - rect.top
     )
     
-    draw(pos.x, pos.y)
-    drawing = false
+    if(drawing) {
+        board[pos.x, pos.y] = color
+        draw()
+        drawing = false
+    }
 }
 
 
