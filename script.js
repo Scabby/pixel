@@ -23,9 +23,9 @@ function draw() {
         let target_color
         
         switch(board[x][y]) {
-            case 1: target_color = white; break
-            case 2: target_color = black; break
-            case 3: target_color = transparent
+            case 1:     target_color = white; break
+            case 2:     target_color = black; break
+            default:    target_color = transparent
         }
     
         drawing.data[i + 0] = target_color[0]
