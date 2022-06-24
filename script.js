@@ -64,7 +64,7 @@ function mousedown(e) {
 
     drawing = true
 
-    board[pos.x, pos.y] = color
+    board[pos.x][pos.y] = color
     draw()
 }
 
@@ -73,7 +73,7 @@ function mousemove(e) {
     let pos = convert_mouse(e)
 
     if(drawing) {
-        board[pos.x, pos.y] = color
+        board[pos.x][pos.y] = color
         draw()
     }
 }
@@ -83,7 +83,7 @@ function mouseup(e) {
     let pos = convert_mouse(e)
 
     if(drawing) {
-        board[pos.x, pos.y] = color
+        board[pos.x][pos.y] = color
         draw()
         drawing = false
     }
@@ -103,7 +103,7 @@ function touchstart(e) {
     
     drawing = true
     
-    board[pos.x, pos.y] = color
+    board[pos.x][pos.y] = color
     draw()
 }
 
@@ -118,7 +118,7 @@ function touchmove(e) {
     )
     
     if(drawing) {
-        board[pos.x, pos.y] = color
+        board[pos.x][pos.y] = color
         draw()
     }
 }
@@ -134,7 +134,7 @@ function touchend(e) {
     )
     
     if(drawing) {
-        board[pos.x, pos.y] = color
+        board[pos.x][pos.y] = color
         draw()
         drawing = false
     }
