@@ -28,7 +28,7 @@ function get_canvas_coords(x, y) {
 function draw(x, y) {
     let drawing = ctx.createImageData(canvas.width, canvas.height)
     
-    for(let i = 0; i < drawing.data.length; i += 4)
+    for(let i = 0; i < drawing.data.length; i += 4) {
         let x = (i / 4) % canvas.width
         let y = Math.floor((i / 4) / canvas.width)
         let target_color
