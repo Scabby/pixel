@@ -2,7 +2,12 @@ const black         = [0, 0, 0, 255]
 const white         = [255, 255, 255, 255]
 const transparent   = [255, 255, 255, 0]
 let drawing         = false
-let shifting        = false
+
+const board = []
+
+for(let i = 0; i < canvas.width; i++) {
+    board.push([])
+}
 
 
 
@@ -13,21 +18,27 @@ function get_canvas_coords(x, y) {
     }
 }
 
-function get_pixel(x, y) {
-    return ctx.getImageData(x, y, 1, 1).data
-}
-
 function draw(x, y) {
-    if(drawing) {
-        let update  = ctx.createImageData(1, 1)
-
-        update.data[0] = color[0]
-        update.data[1] = color[1]
-        update.data[2] = color[2]
-        update.data[3] = color[3]
-
-        ctx.putImageData(update, x, y)
+    let drawing = ctx.createImageData(canvas.width, canvas.height)
+    
+    for(int i = 0; i < drawing.data.length; i += 4)
+        let x = (i / 4) % canvas.width
+        let y = Math.floor((i / 4) / canvas.width)
+        let target_color
+        
+        switch(board[x][y]) {
+            case 1: target_color = white; break
+            case 1: target_color = black; break
+            case 1: target_color = transparent
+        }
+    
+        drawing.data[i + 0] = target_color[0]
+        drawing.data[i + 1] = target_color[1]
+        drawing.data[i + 2] = target_color[2]
+        drawing.data[i + 3] = target_color[4]
     }
+
+    ctx.putImageData(drawing, 0, 0)
 }
 
 function resize(e) {
@@ -47,21 +58,6 @@ function convert_mouse(e) {
         e.offsetX,
         e.offsetY
     )
-}
-
-function set_color(x, y) {
-    if(shifting) {
-        color = transparent
-    } else {
-        let target = get_pixel(x, y)
-
-        let is_black =  target[0] < 128
-                    &&  target[1] < 128
-                    &&  target[2] < 128
-
-        if(is_black)    { color = white }
-        else            { color = black }
-    }
 }
 
 
@@ -105,7 +101,6 @@ function touchstart(e) {
     
     drawing = true
     
-    set_color(pos.x, pos.y)
     draw(pos.x, pos.y)
 }
 
@@ -164,14 +159,12 @@ document.addEventListener("keydown", e => {
     e.preventDefault()
 
     switch(e.key) {
-        case "Shift": shifting = true
+        case "1": color = 1; break
+        case "2": color = 2; break
+        case "3": color = 3
     }
 })
 
 document.addEventListener("keyup", e => {
     e.preventDefault()
-
-    switch(e.key) {
-        case "Shift": shifting = false
-    }
 })
