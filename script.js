@@ -18,7 +18,7 @@ function color_to_string(color) {
     return "rgba("  + color[0] + ","
                     + color[1] + ","    
                     + color[2] + ","
-                    + color[3] + ")"
+                    + color[3]/255 + ")"
 }
 
 function draw() {
