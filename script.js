@@ -14,10 +14,15 @@ function get_canvas_coords(x, y) {
     }
 }
 
+function color_to_string(color) {
+    return "rgba("  + color[0] + ","
+                    + color[1] + ","    
+                    + color[2] + ","
+                    + color[3] + ")"
+}
+
 function draw() {
-    let drawing = ctx.createImageData(canvas.width, canvas.height)
-    
-    for(let i = 0; i < drawing.data.length; i += 4) {
+    for(let i = 0; i < canvas.width * canvas.height; i += 4) {
         let x = (i / 4) % canvas.width
         let y = Math.floor((i / 4) / canvas.width)
         let target_color
@@ -27,14 +32,10 @@ function draw() {
             case 2:     target_color = black; break
             default:    target_color = transparent
         }
-    
-        drawing.data[i + 0] = target_color[0]
-        drawing.data[i + 1] = target_color[1]
-        drawing.data[i + 2] = target_color[2]
-        drawing.data[i + 3] = target_color[4]
-    }
 
-    ctx.putImageData(drawing, 0, 0)
+        ctx.fillStyle = color_to_string(target_color)
+        ctx.fillRect(x, y, 1, 1)
+    }
 }
 
 function resize(e) {
