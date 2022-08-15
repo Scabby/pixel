@@ -22,9 +22,9 @@ function color_to_string(color) {
 }
 
 function draw() {
-    for(let i = 0; i < canvas.width * canvas.height; i += 4) {
-        let x = (i / 4) % canvas.width
-        let y = Math.floor((i / 4) / canvas.width)
+    for(let i = 0; i < canvas.width * canvas.height; i++) {
+        let x = i % canvas.width
+        let y = Math.floor(i / canvas.width)
         let target_color
         
         switch(board[x][y]) {
@@ -34,6 +34,7 @@ function draw() {
         }
 
         ctx.fillStyle = color_to_string(target_color)
+        ctx.clearRect(x, y, 1, 1)
         ctx.fillRect(x, y, 1, 1)
     }
 }
