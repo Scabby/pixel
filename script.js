@@ -1,9 +1,36 @@
 const board         = []
+const board_history = []
+let current_board   = 0
+
 const black         = [0, 0, 0, 255]
 const white         = [255, 255, 255, 255]
 const transparent   = [255, 255, 255, 0]
 let color           = 1
 let drawing         = false
+
+
+
+function push_history() {
+    board_history.push(board)
+}
+
+function undo() {
+    if(current_board > 0) {
+        board = board_history[current_board - 1]
+        current_board--
+    }
+}
+
+function redo() {
+    if(current_board < board_history.length - 1) {
+        board = board_history[current_board + 1]
+        current_board++
+    }
+}
+
+function clear_future() {
+    board.length = current_board + 1
+}
 
 
 
@@ -20,6 +47,8 @@ function color_to_string(color) {
                     + color[2] + ","
                     + color[3]/255 + ")"
 }
+
+
 
 function draw() {
     for(let i = 0; i < canvas.width * canvas.height; i++) {
@@ -89,6 +118,8 @@ function mouseup(e) {
         draw()
         drawing = false
     }
+
+    push_history()
 }
 
 
@@ -140,6 +171,8 @@ function touchend(e) {
         draw()
         drawing = false
     }
+
+    push_history()
 }
 
 
