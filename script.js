@@ -222,8 +222,8 @@ document.addEventListener("keydown", e => {
 
     if(e.ctrlKey || e.metaKey) {
         switch(e.key) {
-            case "z": undo(); draw(); break
-            case "y": redo(); draw(); break
+            case "z": undo(); drawing = false; draw(); break
+            case "y": redo(); drawing = false; draw(); break
         }
     }
     
