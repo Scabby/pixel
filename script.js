@@ -11,7 +11,7 @@ let drawing         = false
 
 
 function push_history() {
-    board_history.push(board)
+    board_history.push(structuredClone(board))
     current_board++
 }
 
@@ -208,7 +208,7 @@ onload = e => {
         board.push(filler)
     }
     
-    board_history.push(board)
+    board_history.push(structuredClone(board))
 
     resize()
 }
