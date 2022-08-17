@@ -52,7 +52,8 @@ function color_to_string(color) {
 
 
 function draw() {
-    ctx.clearRect(x, y, canvas.width, canvas.height)
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    
     for(let i = 0; i < canvas.width * canvas.height; i++) {
         let x = i % canvas.width
         let y = Math.floor(i / canvas.width)
