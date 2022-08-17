@@ -1,5 +1,5 @@
-const board         = []
-const board_history = []
+let board           = []
+let board_history   = []
 let current_board   = 0
 
 const black         = [0, 0, 0, 255]
@@ -29,7 +29,7 @@ function redo() {
 }
 
 function clear_future() {
-    board.length = current_board + 1
+    board_history.length = current_board + 1
 }
 
 
@@ -97,6 +97,8 @@ function mousedown(e) {
 
     board[pos.x][pos.y] = color
     draw()
+
+    clear_future()
 }
 
 function mousemove(e) {
@@ -138,6 +140,8 @@ function touchstart(e) {
     
     board[pos.x][pos.y] = color
     draw()
+
+    clear_future()
 }
 
 function touchmove(e) {
@@ -212,6 +216,13 @@ onresize = resize
 document.addEventListener("keydown", e => {
     e.preventDefault()
 
+    if(e.ctrlKey || e.metaKey) {
+        switch(e.key) {
+            case "z": undo(); break
+            case "y": redo(); break
+        }
+    }
+    
     switch(e.key) {
         case "1": color = 1; break
         case "2": color = 2; break
