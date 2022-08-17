@@ -12,6 +12,7 @@ let drawing         = false
 
 function push_history() {
     board_history.push(board)
+    current_board++
 }
 
 function undo() {
