@@ -205,6 +205,8 @@ onload = e => {
         
         board.push(filler)
     }
+    
+    board_history.push(board)
 
     resize()
 }
