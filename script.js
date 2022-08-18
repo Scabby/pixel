@@ -37,7 +37,7 @@ function clear_future() {
 
 
 
-set_pixel(x, y, value) {
+function set_pixel(x, y, value) {
     if(x < 0 || y < 0 || x >= canvas.width || y >= canvas.height) {
         return false
     }
