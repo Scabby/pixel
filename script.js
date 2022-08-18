@@ -17,20 +17,33 @@ function push_history() {
 
 function undo() {
     if(current_board > 0) {
-        board = board_history[current_board - 1]
+        board = structuredClone(board_history[current_board - 1])
         current_board--
     }
 }
 
 function redo() {
     if(current_board < board_history.length - 1) {
-        board = board_history[current_board + 1]
+        board = structuredClone(board_history[current_board + 1])
         current_board++
     }
 }
 
 function clear_future() {
-    board_history.length = current_board + 1
+    if(current_board < board_history.length - 1) { 
+        board_history.splice(current_board + 1)
+    }
+}
+
+
+
+set_pixel(x, y, value) {
+    if(x < 0 || y < 0 || x >= canvas.width || y >= canvas.height) {
+        return false
+    }
+    
+    board[x][y] = value
+    return true
 }
 
 
@@ -71,7 +84,9 @@ function draw() {
 }
 
 function resize(e) {
-    if(window.innerHeight / canvas.height > window.innerWidth / canvas.width) {
+    if(     window.innerHeight / canvas.height
+        >   window.innerWidth / canvas.width
+    ) {
         canvas.style.width  = window.innerWidth + "px"
         canvas.style.height = "auto"
     } else {
@@ -97,10 +112,10 @@ function mousedown(e) {
 
     drawing = true
 
-    board[pos.x][pos.y] = color
-    draw()
-
-    clear_future()
+    if(set_pixel(pos.x, pos.y, color)) {
+        draw()
+        clear_future()
+    }
 }
 
 function mousemove(e) {
@@ -108,8 +123,9 @@ function mousemove(e) {
     let pos = convert_mouse(e)
 
     if(drawing) {
-        board[pos.x][pos.y] = color
-        draw()
+        if(set_pixel(pos.x, pos.y, color)) {
+            draw()
+        }
     }
 }
 
@@ -118,11 +134,13 @@ function mouseup(e) {
     let pos = convert_mouse(e)
 
     if(drawing) {
-        board[pos.x][pos.y] = color
-        draw()
+        if(set_pixel(pos.x, pos.y, color)) {
+            draw()
+        }
+        
         drawing = false
     }
-
+    
     push_history()
 }
 
@@ -140,10 +158,10 @@ function touchstart(e) {
     
     drawing = true
     
-    board[pos.x][pos.y] = color
-    draw()
-
-    clear_future()
+    if(set_pixel(pos.x, pos.y, color)) {
+        draw()
+        clear_future()
+    }
 }
 
 function touchmove(e) {
@@ -157,8 +175,9 @@ function touchmove(e) {
     )
     
     if(drawing) {
-        board[pos.x][pos.y] = color
-        draw()
+        if(set_pixel(pos.x, pos.y, color)) {
+            draw()
+        }
     }
 }
 
@@ -173,8 +192,9 @@ function touchend(e) {
     )
     
     if(drawing) {
-        board[pos.x][pos.y] = color
-        draw()
+        if(set_pixel(pos.x, pos.y. color)) {
+            draw()
+        }
         drawing = false
     }
 
@@ -202,7 +222,7 @@ onload = e => {
         let filler = []
 
         for(let j = 0; j < canvas.height; j++) {
-            filler.push(2)
+            filler.push(0)
         }
         
         board.push(filler)
@@ -230,7 +250,7 @@ document.addEventListener("keydown", e => {
     switch(e.key) {
         case "1": color = 1; break
         case "2": color = 2; break
-        case "3": color = 3
+        case "3": color = 0
     }
 })
 
