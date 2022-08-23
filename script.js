@@ -231,6 +231,7 @@ onload = e => {
     board_history.push(structuredClone(board))
 
     resize()
+    draw()
 }
 
 onresize = resize
